@@ -1,0 +1,104 @@
+{
+	"info": {
+		"_postman_id": "a7682bdc-4993-4168-97c0-ce07cba28339",
+		"name": "Errors",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "5624272",
+		"_collection_link": "https://cloudy-sunset-1623.postman.co/workspace/WrkSpace03~beaa0f94-3d7c-4cbd-8bd9-f505c980efe8/collection/5624272-a7682bdc-4993-4168-97c0-ce07cba28339?action=share&source=collection_link&creator=5624272"
+	},
+	"item": [
+		{
+			"name": "Error_401_UnAuth",
+			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://api.github.com/user/repos",
+					"protocol": "https",
+					"host": [
+						"api",
+						"github",
+						"com"
+					],
+					"path": [
+						"user",
+						"repos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Error_401_UnAuth Copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('TC 1: Body matches string', () => {\r",
+							"    pm.expect(pm.response.text()).to.include('NewTest12040203');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"TC 2: Response Array Contains Few Tags Test: \", function () {\r",
+							"    var responseJSON = pm.response.json();\r",
+							"    pm.expect(responseJSON).to.be.an('array');\r",
+							"    responseJSON.forEach((repo) => { // Changed 'report' to 'repo'\r",
+							"        pm.expect(repo).to.have.property('id');\r",
+							"        pm.expect(repo).to.have.property('name');\r",
+							"        pm.expect(repo).to.have.property('owner');\r",
+							"        pm.expect(repo.owner).to.have.property('login');\r",
+							"        pm.expect(repo).to.have.property('html_url');\r",
+							"    });\r",
+							"});\r",
+							"\r",
+							"pm.test(\"TC 3: verify name\", function () {\r",
+							"    var responseJSON = pm.response.json();\r",
+							"    pm.expect(responseJSON).to.be.an('array');\r",
+							"    pm.expect(responseJSON[3].name).to.include('postmanRepo');\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{myAuth}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://api.github.com/user/repos",
+					"protocol": "https",
+					"host": [
+						"api",
+						"github",
+						"com"
+					],
+					"path": [
+						"user",
+						"repos"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
